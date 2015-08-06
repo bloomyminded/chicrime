@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Cody Roberts"]
   spec.email         = ["codyjroberts@gmail.com"]
 
-  spec.summary       = %q{Wrapper for Chicago crime open data}
+  spec.summary       = %q{Chicrime is a ruby gem that wraps the soda-ruby library with easy to use methods. The purpose of Chicrime is to enable users to easily access Chicago's crime data.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
