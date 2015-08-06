@@ -37,14 +37,27 @@ describe Chicrime::Dataset do
       expect(subject.select_query("date, ward, id, domestic")).to be_instance_of(Array)
     end
 
-    it 'returns an array of Hashie::Mash object(s)' do
+    it 'returns an array of Hashie::Mash object(s) in an array' do
       expect(subject.select_query()).to be_instance_of(Array)
+      expect(subject.select_query()[0]).to be_instance_of(Hashie::Mash)
     end
   end
 
   describe '#limit_query' do
     it 'returns n items in array' do
       expect(subject.limit_query(5).count).to eq(5)
+    end
+  end
+
+  describe '#order_query' do
+    it 'returns items in descending order' do
+      data = subject.order_query("id", "DESC")
+      expect(data[0].id).to be > data[1].id
+    end
+
+    it 'returns items in ascending order' do
+      data = subject.order_query("id")
+      expect(data[0].id).to be < data[1].id
     end
   end
 

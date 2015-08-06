@@ -33,8 +33,8 @@ module Chicrime
       @client.get(@dataset_id, {"$limit" => "#{n}"})
     end
 
-    def get hash={}
-      @client.get(@dataset_id, hash)
+    def order_query column, order="ASC"
+      @client.get(@dataset_id, {"$order" => "#{column} #{order}"})
     end
 
   end
