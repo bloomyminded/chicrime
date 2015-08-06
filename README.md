@@ -1,9 +1,8 @@
 # Chicrime
 [![Coverage Status](https://coveralls.io/repos/bloomyminded/chicrime/badge.svg?branch=master&service=github)](https://coveralls.io/github/bloomyminded/chicrime?branch=master)[![Build Status](https://travis-ci.org/bloomyminded/chicrime.png?branch=master)](https://travis-ci.org/bloomyminded/chicrime)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/chicrime`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Chicrime is a ruby gem that wraps the [soda-ruby](https://github.com/socrata/soda-ruby) library with easy to use methods.  The purpose of Chicrime is to enable users to easily access
+Chicago's crime [data](http://data.cityofchicago.org).
 
 ## Installation
 
@@ -23,13 +22,30 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+chicrime = Chicrime::Dataset.new(<OPTIONAL API TOKEN>)
+
+
+chicrime.where_query("ward = '1'", "beat = '1431'")
+# => returns array of Hashie::Mash objects where ward = 1 and beat = 1431
+
+chicrime.select_query(:beat)
+# => returns array of Hashie::Mash objects containing only beat's 
+
+chicrime.limit_query(2)
+# => returns array of 2 Hashie:Mash objects
+
+chicrime.order_query(:id)
+# => returns array of Hashie::Mash objects in ascending order by id
+
+chicrime.order_query(:id, :DESC)
+# => returns array of Hashie::Mash objects in descending order by id
+
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+TODO: Method chaining
 
 ## Contributing
 
