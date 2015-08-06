@@ -10,22 +10,14 @@ end
 describe Chicrime::Dataset do
 
   before :all do
-    @dataset = Chicrime::Dataset.new('3iKjVXIj6i2Qj1oeEPr4kRqY2')
+    @data = Chicrime::Dataset.new('3iKjVXIj6i2Qj1oeEPr4kRqY2')
   end
 
-  subject { @dataset }
-
-  it { should respond_to :id }
+  subject { @data }
 
   context "created with defaults" do
     its(:client) { should be_an_instance_of SODA::Client }
-    its(:dataset_id) { should eq('ijzp-q8t2') }
-  end
-
-  describe '#id' do
-    it 'returns Hashie::Map object for crime with given id' do
-      pending        
-    end
+    its(:dataset_id) { should eq('x2n5-8w5q') }
   end
 
 end

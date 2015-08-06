@@ -6,12 +6,9 @@ module Chicrime
     attr_accessor :client
     attr_reader :dataset_id
 
-    def initialize token
+    def initialize token=''
       @client = SODA::Client.new({:domain => 'data.cityofchicago.org', :app_token => token})
-      @dataset_id = 'ijzp-q8t2'
-    end
-
-    def id
+      @dataset_id = 'x2n5-8w5q'
     end
 
   end
