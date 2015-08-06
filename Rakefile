@@ -3,9 +3,12 @@ require "rspec/core/rake_task"
 
 # Default directory to look in is `/specs`
 # Run with `rake spec`
-RSpec::Core::RakeTask.new(:spec) do |task|
-  task.rspec_opts = ['--color', '--format', 'nested']
+begin
+  require 'rspec/core/rake_task'
+
+  RSpec::Core::RakeTask.new(:spec)
+
+  task :default => :spec
+rescue LoadError
+  # no rspec available
 end
-
-task :default => :spec
-
