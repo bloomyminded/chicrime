@@ -9,10 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Cody Roberts"]
   spec.email         = ["codyjroberts@gmail.com"]
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
-
   spec.summary       = %q{Wrapper for Chicago crime open data}
   spec.homepage      = ""
   spec.license       = "MIT"
