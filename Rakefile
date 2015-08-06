@@ -12,3 +12,16 @@ begin
 rescue LoadError
   # no rspec available
 end
+
+task :console do
+  require 'pry'
+  require_relative 'lib/chicrime'
+
+  def reload!
+    files = $LOADED_FEATURES.select { |feat| feat =~ /\/lib\/chicrime\// }
+    files.each { |file| load file }
+  end
+
+  ARGV.clear
+  Pry.start
+end

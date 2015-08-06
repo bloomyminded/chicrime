@@ -8,7 +8,16 @@ module Chicrime
 
     def initialize token=''
       @client = SODA::Client.new({:domain => 'data.cityofchicago.org', :app_token => token})
-      @dataset_id = 'x2n5-8w5q'
+      @dataset_id = 'ijzp-q8t2'
+    end
+
+    def where_query *args
+      query = args * " AND "
+      if args.count > 0
+        @client.get(@dataset_id, {"$where" => "#{query}"}) 
+      else
+        @client.get(@dataset_id, {})
+      end
     end
 
   end

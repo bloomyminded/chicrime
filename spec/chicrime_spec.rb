@@ -10,14 +10,26 @@ end
 describe Chicrime::Dataset do
 
   before :all do
-    @data = Chicrime::Dataset.new('3iKjVXIj6i2Qj1oeEPr4kRqY2')
+    @dataset = Chicrime::Dataset.new('3iKjVXIj6i2Qj1oeEPr4kRqY2')
   end
 
-  subject { @data }
+  subject { @dataset }
+
+  it { should respond_to :where_query }
 
   context "created with defaults" do
     its(:client) { should be_an_instance_of SODA::Client }
-    its(:dataset_id) { should eq('x2n5-8w5q') }
+    its(:dataset_id) { should eq('ijzp-q8t2') }
+  end
+
+  describe '#where_query' do
+    it 'concatentates queries with AND' do
+      expect(subject.where_query("beat = '0624'", "year = '2013'")).to be_instance_of(Array)
+    end
+
+    it 'returns an array of Hashie::Mash object(s)' do
+      expect(subject.where_query()).to be_instance_of(Array)
+    end
   end
 
 end
