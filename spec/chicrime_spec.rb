@@ -10,7 +10,7 @@ end
 describe Chicrime::Dataset do
 
   before :all do
-    @dataset = Chicrime::Dataset.new('3iKjVXIj6i2Qj1oeEPr4kRqY2')
+    @dataset = Chicrime::Dataset.new
   end
 
   subject { @dataset }
