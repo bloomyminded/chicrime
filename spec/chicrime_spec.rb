@@ -32,4 +32,20 @@ describe Chicrime::Dataset do
     end
   end
 
+  describe '#select_query' do
+    it 'concatenates queries with ','' do
+      expect(subject.select_query("date, ward, id, domestic")).to be_instance_of(Array)
+    end
+
+    it 'returns an array of Hashie::Mash object(s)' do
+      expect(subject.select_query()).to be_instance_of(Array)
+    end
+  end
+
+  describe '#limit_query' do
+    it 'returns n items in array' do
+      expect(subject.limit_query(5).count).to eq(5)
+    end
+  end
+
 end

@@ -20,5 +20,22 @@ module Chicrime
       end
     end
 
+    def select_query *args
+      query = args * ","
+      if args.count > 0
+        @client.get(@dataset_id, {"$select" => "#{query}"}) 
+      else
+        @client.get(@dataset_id, {})
+      end
+    end
+
+    def limit_query n
+      @client.get(@dataset_id, {"$limit" => "#{n}"})
+    end
+
+    def get hash={}
+      @client.get(@dataset_id, hash)
+    end
+
   end
 end
