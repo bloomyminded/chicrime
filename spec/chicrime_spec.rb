@@ -36,7 +36,6 @@ describe Chicrime::Dataset do
   end
 
   describe '#limit' do
-
     context 'when called with fixnum' do
       subject { @dataset.limit(5) }
 
@@ -54,6 +53,24 @@ describe Chicrime::Dataset do
 
       it 'returns correct hash' do
         expect(subject).to eq({"$limit" => "1"})
+      end
+    end
+  end
+
+  describe '#select', focus: true do
+    context 'when called with multiple arguments' do
+      subject { @dataset.select('date', 'ward') }
+
+      it 'concatenates with ,' do
+        expect(subject["$select"].to eq("date, ward"))
+      end
+    end
+
+    context 'when called with 1 argument' do
+      subject { @dataset.select('date') }
+      
+      it 'returns correct hash' do
+        expect(subject).to eq({"$select" => "date"})
       end
     end
   end
