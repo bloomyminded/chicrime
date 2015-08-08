@@ -75,7 +75,7 @@ describe Chicrime::Dataset do
     end
   end
 
-  describe '#order', focus: true do
+  describe '#order' do
     context 'when called with without order' do
       subject { @dataset.order("id") }
 
@@ -95,5 +95,9 @@ describe Chicrime::Dataset do
         expect(subject).to eq({"$order" => "id DESC"})
       end
     end
+  end
+
+  describe '#query', focus: true do
+
   end
 end
