@@ -12,6 +12,9 @@ module Chicrime
       @query = {}
     end
 
+    #TODO: Add after filter to combine hashes
+    #      Implement query
+
     def where *args
       query = args.count > 0 ? args * " AND " : ""
       {"$where" => "#{query}"}
@@ -30,10 +33,5 @@ module Chicrime
     def order column, order=:ASC
       {"$order" => "#{column} #{order}"}
     end
-
-    def order_query column, order="ASC"
-      @client.get(@dataset_id, {"$order" => "#{column} #{order}"})
-    end
-
   end
 end
