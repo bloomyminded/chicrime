@@ -8,8 +8,7 @@ describe Chicrime do
 end
 
 describe Chicrime::Dataset do
-
-  before :each do
+  before :all do
     @dataset = Chicrime::Dataset.new
   end
 
@@ -29,38 +28,16 @@ describe Chicrime::Dataset do
   describe '#limit' do
     before { @dataset.limit(1) }
     it { expect(@dataset.query).to have_key("$limit") }
-
-    context 'when called with fixnum' do
-
-    end
-
-    context 'when called with string' do
-
-    end
   end
 
   describe '#select' do
     before { @dataset.select('date') }
     it { expect(@dataset.query).to have_key("$select") }
-
-    context 'when called with multiple arguments' do
-    end
-
-    context 'when called with 1 argument' do
-    end
   end
 
   describe '#order' do
     before { @dataset.order('id') }
     it { expect(@dataset.query).to have_key("$order") }
-
-    context 'when called with without order' do
-      
-    end
-
-    context 'when called with order = DESC' do
-      
-    end
   end
 
   describe '#results' do
