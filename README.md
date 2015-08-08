@@ -50,13 +50,14 @@ chicrime.where("year = '2014'", "community_area = '1'").order("date").results
 ## Resources
 
 [API Documentation](http://dev.socrata.com/foundry/#/data.cityofchicago.org/ijzp-q8t2)
+
 [SoQL Queries](http://dev.socrata.com/docs/queries.html)
+
 [Location functions](http://dev.socrata.com/docs/datatypes/location.html)
 
 ## Development
 
 TODO: Implement group query & documentation
-
 
 ## Contributing
 
