@@ -25,27 +25,38 @@ Or install it yourself as:
 ```ruby
 chicrime = Chicrime::Dataset.new(<OPTIONAL API TOKEN>)
 
+# Add queries with where, select, query, and order
 
-chicrime.where_query("ward = '1'", "beat = '1431'")
-# => returns array of Hashie::Mash objects where ward = 1 and beat = 1431
+# where
+chicrime.where("year = '2014'")
 
-chicrime.select_query(:beat)
-# => returns array of Hashie::Mash objects containing only beat's 
+# select
+chicrime.select('date', 'arrest', 'location')
 
-chicrime.limit_query(2)
-# => returns array of 2 Hashie:Mash objects
+# limit
+chicrime.limit(5)
 
-chicrime.order_query(:id)
-# => returns array of Hashie::Mash objects in ascending order by id
+# order
+chicrime.order("id", :DESC)
 
-chicrime.order_query(:id, :DESC)
-# => returns array of Hashie::Mash objects in descending order by id
+# Chain queries
+chicrime.where("year = '2014'", "community_area = '1'").limit(100)
+chicrime.where("within_circle(location, 41.8719708, -87.6492965, 500)").order("date")
 
+# Get results
+chicrime.where("year = '2014'", "community_area = '1'").order("date").results
 ```
+
+## Resources
+
+[API Documentation](http://dev.socrata.com/foundry/#/data.cityofchicago.org/ijzp-q8t2)
+[SoQL Queries](http://dev.socrata.com/docs/queries.html)
+[Location functions](http://dev.socrata.com/docs/datatypes/location.html)
 
 ## Development
 
-TODO: Method chaining
+TODO: Implement group query & documentation
+
 
 ## Contributing
 
