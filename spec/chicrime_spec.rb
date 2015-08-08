@@ -57,7 +57,7 @@ describe Chicrime::Dataset do
     end
   end
 
-  describe '#select', focus: true do
+  describe '#select' do
     context 'when called with multiple arguments' do
       subject { @dataset.select('date', 'ward') }
 
@@ -75,43 +75,25 @@ describe Chicrime::Dataset do
     end
   end
 
-  describe '#where_query' do
-    it 'concatentates queries with AND' do
-      expect(subject.where_query("beat = '0624'", "year = '2013'")).to be_instance_of(Array)
+  describe '#order', focus: true do
+    context 'when called with without order' do
+      subject { @dataset.order("id") }
+
+      it 'should default to ascending' do
+        expect(subject["$order"]).to eq("id ASC")
+      end
+
+      it 'should return correct hash' do
+        expect(subject).to eq({"$order" => "id ASC"})
+      end
     end
 
-    it 'returns an array of Hashie::Mash object(s)' do
-      expect(subject.where_query()).to be_instance_of(Array)
-    end
-  end
+    context 'when called with order = DESC' do
+      subject { @dataset.order("id", :DESC) }
 
-  describe '#select_query' do
-    it 'concatenates queries with ','' do
-      expect(subject.select_query("date, ward, id, domestic")).to be_instance_of(Array)
-    end
-
-    it 'returns an array of Hashie::Mash object(s) in an array' do
-      expect(subject.select_query()).to be_instance_of(Array)
-      expect(subject.select_query()[0]).to be_instance_of(Hashie::Mash)
-    end
-  end
-
-  describe '#limit_query' do
-    it 'returns n items in array' do
-      expect(subject.limit_query(5).count).to eq(5)
+      it 'should should return correct hash' do
+        expect(subject).to eq({"$order" => "id DESC"})
+      end
     end
   end
-
-  describe '#order_query' do
-    it 'returns items in descending order' do
-      data = subject.order_query("id", "DESC")
-      expect(data[0].id).to be > data[1].id
-    end
-
-    it 'returns items in ascending order' do
-      data = subject.order_query("id")
-      expect(data[0].id).to be < data[1].id
-    end
-  end
-
 end
