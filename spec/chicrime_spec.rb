@@ -41,6 +41,10 @@ describe Chicrime::Dataset do
   end
 
   describe '#results' do
+    before :each do
+      @dataset.query = {}
+    end
+
     context 'when called with #where' do
       let(:data) { @dataset.where("year = 2013").results }
       it 'returns an array of Hashie::Map object(s) with given $where' do
@@ -74,7 +78,7 @@ describe Chicrime::Dataset do
       it 'returns an array of Hashie::Map object(s) with given $order' do
         expect(data).to be_an_instance_of(Array)
         expect(data.sample).to be_an_instance_of(Hashie::Mash)
-        expect(data[0]["id"]).to be < data[1]["id"]
+        expect(data[0][:id]).to be < data[1][:id]
       end
     end
 
