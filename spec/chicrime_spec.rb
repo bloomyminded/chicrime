@@ -17,15 +17,44 @@ describe Chicrime::Dataset do
 
   it { should respond_to :where_query }
 
-  context "created with defaults", focus: true do
+  context "created with defaults" do
     its(:client) { should be_an_instance_of SODA::Client }
     its(:dataset_id) { should eq('ijzp-q8t2') }
     its(:query) { should be_an_instance_of Hash }
   end
 
-  describe '#where', focus: true do
+  describe '#where' do
+    subject { @dataset.where("beat = '0624'", "year = '2013'")}
+
     it 'concatenates queries with AND' do
-      expect(subject.where("beat = '0624'", "year = '2013'")).to be_instance_of(Hash)
+      expect(subject["$where"]).to eq("beat = '0624' AND year = '2013'")
+    end
+    
+    it 'returns hash' do
+      expect(subject).to eq({"$where" => "beat = '0624' AND year = '2013'"})
+    end
+  end
+
+  describe '#limit' do
+
+    context 'when called with fixnum' do
+      subject { @dataset.limit(5) }
+
+      it 'returns hash with string' do
+        expect(subject["$limit"]).to eq("5")
+      end
+
+      it 'returns correct hash' do
+        expect(subject).to eq({"$limit" => "5"})
+      end
+    end
+
+    context 'when called with string' do
+      subject { @dataset.limit("1") }
+
+      it 'returns correct hash' do
+        expect(subject).to eq({"$limit" => "1"})
+      end
     end
   end
 

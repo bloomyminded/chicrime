@@ -17,6 +17,11 @@ module Chicrime
       {"$where" => "#{query}"}
     end
 
+    def limit n
+      query = n
+      {"$limit" => "#{query}"}
+    end
+
     def where_query *args
       query = args * " AND "
       if args.count > 0
