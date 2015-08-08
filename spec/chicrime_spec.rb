@@ -62,7 +62,7 @@ describe Chicrime::Dataset do
       subject { @dataset.select('date', 'ward') }
 
       it 'concatenates with ,' do
-        expect(subject["$select"].to eq("date, ward"))
+        expect(subject["$select"]).to eq("date, ward")
       end
     end
 

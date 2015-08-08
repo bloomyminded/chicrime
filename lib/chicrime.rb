@@ -21,6 +21,11 @@ module Chicrime
       query = n
       {"$limit" => "#{query}"}
     end
+    
+    def select *args
+      query = args.count > 0 ? args * ', ' : ''
+      {"$select" => "#{query}"}
+    end
 
     def where_query *args
       query = args * " AND "
