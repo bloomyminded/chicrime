@@ -12,26 +12,31 @@ module Chicrime
       @query = {}
     end
 
-    #TODO: Add after filter to combine hashes
-    #      Implement query
-
     def where *args
       query = args.count > 0 ? args * " AND " : ""
-      {"$where" => "#{query}"}
+      @query.store("$where", "#{query}")
+      self
     end
 
     def limit n
       query = n
-      {"$limit" => "#{query}"}
+      @query.store("$limit", "#{query}")
+      self
     end
     
     def select *args
       query = args.count > 0 ? args * ', ' : ''
-      {"$select" => "#{query}"}
+      @query.store("$select", "#{query}")
+      self
     end
 
     def order column, order=:ASC
-      {"$order" => "#{column} #{order}"}
+      @query.store("$order", "#{column} #{order}")
+      self
+    end
+
+    def results 
+      @client.get(@dataset_id, @query)
     end
   end
 end

@@ -9,13 +9,11 @@ end
 
 describe Chicrime::Dataset do
 
-  before :all do
+  before :each do
     @dataset = Chicrime::Dataset.new
   end
 
   subject { @dataset }
-
-  it { should respond_to :where_query }
 
   context "created with defaults" do
     its(:client) { should be_an_instance_of SODA::Client }
@@ -24,80 +22,93 @@ describe Chicrime::Dataset do
   end
 
   describe '#where' do
-    subject { @dataset.where("beat = '0624'", "year = '2013'")}
-
-    it 'concatenates queries with AND' do
-      expect(subject["$where"]).to eq("beat = '0624' AND year = '2013'")
-    end
-    
-    it 'returns hash' do
-      expect(subject).to eq({"$where" => "beat = '0624' AND year = '2013'"})
-    end
+    before { @dataset.where("beat = '0624'", "year = '2013'")}
+    it { expect(@dataset.query).to have_key("$where") }
   end
 
   describe '#limit' do
+    before { @dataset.limit(1) }
+    it { expect(@dataset.query).to have_key("$limit") }
+
     context 'when called with fixnum' do
-      subject { @dataset.limit(5) }
 
-      it 'returns hash with string' do
-        expect(subject["$limit"]).to eq("5")
-      end
-
-      it 'returns correct hash' do
-        expect(subject).to eq({"$limit" => "5"})
-      end
     end
 
     context 'when called with string' do
-      subject { @dataset.limit("1") }
 
-      it 'returns correct hash' do
-        expect(subject).to eq({"$limit" => "1"})
-      end
     end
   end
 
   describe '#select' do
-    context 'when called with multiple arguments' do
-      subject { @dataset.select('date', 'ward') }
+    before { @dataset.select('date') }
+    it { expect(@dataset.query).to have_key("$select") }
 
-      it 'concatenates with ,' do
-        expect(subject["$select"]).to eq("date, ward")
-      end
+    context 'when called with multiple arguments' do
     end
 
     context 'when called with 1 argument' do
-      subject { @dataset.select('date') }
-      
-      it 'returns correct hash' do
-        expect(subject).to eq({"$select" => "date"})
-      end
     end
   end
 
   describe '#order' do
+    before { @dataset.order('id') }
+    it { expect(@dataset.query).to have_key("$order") }
+
     context 'when called with without order' do
-      subject { @dataset.order("id") }
-
-      it 'should default to ascending' do
-        expect(subject["$order"]).to eq("id ASC")
-      end
-
-      it 'should return correct hash' do
-        expect(subject).to eq({"$order" => "id ASC"})
-      end
+      
     end
 
     context 'when called with order = DESC' do
-      subject { @dataset.order("id", :DESC) }
-
-      it 'should should return correct hash' do
-        expect(subject).to eq({"$order" => "id DESC"})
-      end
+      
     end
   end
 
-  describe '#query', focus: true do
+  describe '#results' do
+    context 'when called with #where' do
+      let(:data) { @dataset.where("year = 2013").results }
+      it 'returns an array of Hashie::Map object(s) with given $where' do
+        expect(data).to be_an_instance_of(Array)
+        expect(data.sample).to be_an_instance_of(Hashie::Mash)
+        expect(data.sample).not_to include("year" => "2014")
+      end
+    end
 
+    context 'when called with #limit' do
+      let(:data) { @dataset.limit(5).results }
+      it 'returns an array of Hashie::Map object(s) with given $limit' do
+        expect(data).to be_an_instance_of(Array)
+        expect(data.sample).to be_an_instance_of(Hashie::Mash)
+        expect(data.count).to eq(5) 
+      end
+    end
+
+    context 'when called with #select' do
+      let(:data) { @dataset.select("year").results }
+      it 'returns an array of Hashie::Map object(s) with given $select' do
+        expect(data).to be_an_instance_of(Array)
+        expect(data.sample).to be_an_instance_of(Hashie::Mash)
+        expect(data.sample).not_to have_key("id")
+        expect(data.sample).to have_key("year")
+      end
+    end
+
+    context 'when called with #order' do
+      let(:data) { @dataset.order("id").results }
+      it 'returns an array of Hashie::Map object(s) with given $order' do
+        expect(data).to be_an_instance_of(Array)
+        expect(data.sample).to be_an_instance_of(Hashie::Mash)
+        expect(data[0]["id"]).to be < data[1]["id"]
+      end
+    end
+
+    context 'when called with #where and #limit' do
+      let(:data) { @dataset.where("year = 2013").limit(1).results }
+      it 'returns an array of Hashie::Map object(s) with given $where & $limit' do
+        expect(data).to be_an_instance_of(Array)
+        expect(data.sample).to be_an_instance_of(Hashie::Mash)
+        expect(data.count).to eq(1)
+        expect(data.sample).not_to include("year" => "2005")
+      end
+    end
   end
 end
