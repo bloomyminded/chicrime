@@ -27,26 +27,8 @@ module Chicrime
       {"$select" => "#{query}"}
     end
 
-    def where_query *args
-      query = args * " AND "
-      if args.count > 0
-        @client.get(@dataset_id, {"$where" => "#{query}"}) 
-      else
-        @client.get(@dataset_id, {})
-      end
-    end
-
-    def select_query *args
-      query = args * ","
-      if args.count > 0
-        @client.get(@dataset_id, {"$select" => "#{query}"}) 
-      else
-        @client.get(@dataset_id, {})
-      end
-    end
-
-    def limit_query n
-      @client.get(@dataset_id, {"$limit" => "#{n}"})
+    def order column, order=:ASC
+      {"$order" => "#{column} #{order}"}
     end
 
     def order_query column, order="ASC"
