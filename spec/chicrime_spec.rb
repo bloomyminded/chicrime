@@ -17,9 +17,16 @@ describe Chicrime::Dataset do
 
   it { should respond_to :where_query }
 
-  context "created with defaults" do
+  context "created with defaults", focus: true do
     its(:client) { should be_an_instance_of SODA::Client }
     its(:dataset_id) { should eq('ijzp-q8t2') }
+    its(:query) { should be_an_instance_of Hash }
+  end
+
+  describe '#where', focus: true do
+    it 'concatenates queries with AND' do
+      expect(subject.where("beat = '0624'", "year = '2013'")).to be_instance_of(Hash)
+    end
   end
 
   describe '#where_query' do
