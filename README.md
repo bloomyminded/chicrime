@@ -57,7 +57,10 @@ chicrime.where("year = '2014'", "community_area = '1'").order("date").results
 
 ## Development
 
-TODO: Implement group query & documentation
+TODO
+ - Implement group query
+ - Documentation
+ - Hash support for method queries
 
 ## Contributing
 
