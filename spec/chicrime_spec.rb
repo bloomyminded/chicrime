@@ -17,32 +17,32 @@ describe Chicrime::Dataset do
   context "created with defaults" do
     its(:client) { should be_an_instance_of SODA::Client }
     its(:dataset_id) { should eq('ijzp-q8t2') }
-    its(:query) { should be_an_instance_of Hash }
+    its(:soql) { should be_an_instance_of Hash }
   end
 
   describe '#where' do
     before { @dataset.where("beat = '0624'", "year = '2013'")}
-    it { expect(@dataset.query).to have_key("$where") }
+    it { expect(@dataset.soql).to have_key("$where") }
   end
 
   describe '#limit' do
     before { @dataset.limit(1) }
-    it { expect(@dataset.query).to have_key("$limit") }
+    it { expect(@dataset.soql).to have_key("$limit") }
   end
 
   describe '#select' do
     before { @dataset.select('date') }
-    it { expect(@dataset.query).to have_key("$select") }
+    it { expect(@dataset.soql).to have_key("$select") }
   end
 
   describe '#order' do
     before { @dataset.order('id') }
-    it { expect(@dataset.query).to have_key("$order") }
+    it { expect(@dataset.soql).to have_key("$order") }
   end
 
   describe '#results' do
     before :each do
-      @dataset.query = {}
+      @dataset.soql = {}
     end
 
     context 'when called with #where' do
