@@ -45,6 +45,16 @@ chicrime.where("within_circle(location, 41.8719708, -87.6492965, 500)").order("d
 
 # Get results
 chicrime.where("year = '2014'", "community_area = '1'").order("date").results
+
+# New semi-working DSL
+chicrime.query do
+  where do
+    year equals 2014
+  end
+  order :id, :desc
+  limit 15
+  select :arrest, :date, :location
+end
 ```
 
 ## Resources
