@@ -13,18 +13,35 @@ module Chicrime
     end
 
     def query &block
+      @soql = {}
       instance_eval(&block)
       results
     end
 
-    #def method_missing m, op=:AND, *args, &block
-    #  q = args.count > 0 ? args * " #{op} " : ""
-    #  @soql.store("$#{m}", "#{q}")
-    #end
+    def method_missing m, *args, &block 
+      if soql["$where"]
+        prev = soql["$where"] + " AND"
+      else
+        prev = ""
+      end
 
-    def where op=:AND, *args
-      q = args.count > 0 ? args * " #{op} " : ""
+      q = "#{prev} #{m} #{args[0]} #{args[1]}".strip
+
       @soql.store("$where", "#{q}")
+    end
+
+    def equals data
+      "= #{data}"
+    end
+
+    def where *args, &block
+      if block_given?
+        instance_eval(&block)
+      else
+        q = args.count > 0 ? args * " AND " : ""
+        @soql.store("$where", "#{q}")
+      end
+
       self
     end
 
