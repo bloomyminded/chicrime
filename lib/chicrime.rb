@@ -18,20 +18,16 @@ module Chicrime
       results
     end
 
+    # TODO: only respond when called inside where block
     def method_missing m, *args, &block 
       if soql["$where"]
         prev = soql["$where"] + " AND"
+        q = "#{prev} #{m} #{args[0]} #{args[1]}".strip
+        @soql.store("$where", "#{q}")
       else
-        prev = ""
+        q = "#{m} #{args[0]} #{args[1]}".strip
+        @soql.store("$where", "#{q}")
       end
-
-      q = "#{prev} #{m} #{args[0]} #{args[1]}".strip
-
-      @soql.store("$where", "#{q}")
-    end
-
-    def equals data
-      "= #{data}"
     end
 
     def where *args, &block
@@ -61,9 +57,29 @@ module Chicrime
       self
     end
 
+    def search str
+      @soql.store("$q", "#{str}")
+      self
+    end
+
     def results 
-      puts @soql
       @client.get(@dataset_id, @soql)
+    end
+
+    def equals data
+      "= #{data}"
+    end
+
+    def greater_than data
+      "> #{data}"
+    end
+
+    def less_than data
+      "< #{data}"
+    end
+
+    def not_equal data
+      "!= #{data}"
     end
   end
 end

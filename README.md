@@ -39,6 +39,9 @@ chicrime.limit(5)
 # order
 chicrime.order("id", :DESC)
 
+# search
+chicrime.search("Kingsbury St")
+
 # Chain queries
 chicrime.where("year = '2014'", "community_area = '1'").limit(100)
 chicrime.where("within_circle(location, 41.8719708, -87.6492965, 500)").order("date")
@@ -46,11 +49,18 @@ chicrime.where("within_circle(location, 41.8719708, -87.6492965, 500)").order("d
 # Get results
 chicrime.where("year = '2014'", "community_area = '1'").order("date").results
 
-# New semi-working DSL
+# New semi-working DSL, use at your own risk
+# where is the only parameter with a block implemented
+# available operators include: equals, less_than, greater_than, not_equal
 chicrime.query do
   where do
-    year equals 2014
+    year greater_than 2013
+    arrest equals false
+    ward not_equal 15
   end
+
+  search "Kingsbury St"
+
   order :id, :desc
   limit 15
   select :arrest, :date, :location
@@ -68,7 +78,7 @@ end
 ## Development
 
 TODO
- - Implement group query
+ - Implement group parameter
  - Documentation
  - Hash support for method queries
 
