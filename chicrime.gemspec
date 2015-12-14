@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Cody Roberts"]
   spec.email         = ["codyjroberts@gmail.com"]
 
-  spec.summary       = %q{Chicrime is a ruby gem that wraps the soda-ruby library with easy to use methods. The purpose of Chicrime is to enable users to easily access Chicago's crime data.}
-  spec.homepage      = "http://www.codyjroberts.com"
+  spec.summary       = %q{Chicrime is a ruby gem that wraps the soda-ruby library with easy to use methods and  a DSL. The purpose of Chicrime is to enable users to easily access Chicago's crime data.}
+  spec.homepage      = "http://www.github.com/bloomyminded/chicrime"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
