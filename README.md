@@ -1,5 +1,5 @@
 # Chicrime
-[![Coverage Status](https://coveralls.io/repos/bloomyminded/chicrime/badge.svg?branch=master&service=github)](https://coveralls.io/github/bloomyminded/chicrime?branch=master) [![Build Status](https://travis-ci.org/bloomyminded/chicrime.png?branch=master)](https://travis-ci.org/bloomyminded/chicrime) [![Gem Version](https://badge.fury.io/rb/chicrime.svg)](http://badge.fury.io/rb/chicrime)
+[![Coverage Status](https://coveralls.io/repos/bloomyminded/chicrime/badge.svg?branch=master&service=github)](https://coveralls.io/github/bloomyminded/chicrime?branch=master) [![Build Status](https://travis-ci.org/codyjroberts/chicrime.png?branch=master)](https://travis-ci.org/bloomyminded/chicrime) [![Gem Version](https://badge.fury.io/rb/chicrime.svg)](http://badge.fury.io/rb/chicrime)
 
 Chicrime is a ruby gem that wraps the [soda-ruby](https://github.com/socrata/soda-ruby) library with easy to use methods.  The purpose of Chicrime is to enable users to easily access
 Chicago's crime [data](http://data.cityofchicago.org).
